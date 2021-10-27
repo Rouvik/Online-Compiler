@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cpp Exec</title>
+</head>
+<body>
+  <textarea id="txt" cols="45" rows="20" placeholder="Your code here"></textarea><br>
+  <button onclick="sendCode()">Submit</button><br><br>
+  <textarea id="out" cols="45" rows="20" placeholder="Output" readonly></textarea>
+</body>
+<script type="text/javascript">
+  var out = document.getElementById('out');
+  async function sendCode() {
+    out.value = 'Compiling...';
+    let options = {
+      method: 'POST',
+      headers: {
+        'access-control-allow-origin': '*',
+        'content-type': 'text/plain'
+      },
+      body: document.getElementById('txt').value
+    }, url = 'http://localhost:8000/run';
+    let req = await fetch(url, options);
+    out.value = await req.text();
+  }
+</script>
+</html>
