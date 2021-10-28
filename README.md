@@ -1,4 +1,4 @@
-# Online-Comliler
+# Online-Compiler
 A simple application for compiling C/CPP programs online
 
 ## Note:
