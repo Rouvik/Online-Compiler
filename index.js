@@ -40,7 +40,7 @@ http.createServer((req, res) => {
             res.end(err);
           }
         });
-        cp.exec('g++ ./bin/temp.cpp -o ${HOME}/temp; ${HOME}/temp; rm -f ./bin/temp.cpp ${HOME}/temp', (error, stdout, stderr) =>
+        cp.exec('g++ ./bin/temp.cpp -o ./bin/temp; ./bin/temp; rm -f ./bin/temp.cpp ./bin/temp', (error, stdout, stderr) =>
         {
           if(error){
             console.log('Error:\n' + error);
