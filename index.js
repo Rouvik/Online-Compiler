@@ -57,6 +57,21 @@ http.createServer((req, res) => {
         res.end(err);
       });
     }
+  } else if (req.method == 'GET') {
+    if (req.url == '/') {
+      res.writeHead(200, {
+        'access-control-allow-origin': '*',
+        'content-type': 'text/html'
+      });
+      fs.readFile('./index.html', (err, out) => {
+        if (err) {
+          console.error(err);
+          res.end(err);
+        } else {
+          res.end(out);
+        }
+      });
+    }
   }
 }).listen(port);
 
