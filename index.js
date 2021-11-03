@@ -34,13 +34,13 @@ http.createServer((req, res) => {
       req.on('data', (byte) => {
         code += byte;
       }).on('end', () => {
-        fs.writeFile('./bin/temp.cpp', code, (err) => {
+        fs.writeFile('./.data/temp.cpp', code, (err) => {
           if(err){
             console.error(err);
             res.end(err);
           }
         });
-        cp.exec('g++ ./bin/temp.cpp -o ./bin/temp; ./bin/temp; rm -f ./bin/temp.cpp ./bin/temp', (error, stdout, stderr) =>
+        cp.exec('g++ ./.data/temp.cpp -o ./.data/temp; ./.data/temp; rm -f ./.data/temp.cpp ./.data/temp', (error, stdout, stderr) =>
         {
           if(error){
             console.log('Error:\n' + error);
@@ -76,3 +76,10 @@ http.createServer((req, res) => {
 }).listen(port);
 
 console.log('Listening at port: ' + port);
+
+// repetitive logging to keep the app online
+setInterval(()=>{
+  http.get('http://onlinecompiler.glitch.me', ()=>{
+    console.log('Ping!');
+  })
+}, 5000);
