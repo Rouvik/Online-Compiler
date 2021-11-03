@@ -21,7 +21,7 @@
         'content-type': 'text/plain'
       },
       body: document.getElementById('txt').value
-    }, url = 'https://onlinecompiler.glitch.me/run';
+    }, url = 'http://localhost:8000/run';
     let req = await fetch(url, options);
     out.value = await req.text();
   }
