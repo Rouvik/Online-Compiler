@@ -1,30 +1,27 @@
 // lib
 const http = require('http'),
+      {Server} = require('./server.js'),
       cp = require('child_process'),
-      fs = require('fs');
+      fs = require('fs'),
+      {WebSocketServer} = require('ws');
+
+// a simple function to delete files and handle errors
+function rm(paths) {
+  for(let path of paths) {
+    fs.rm(path, (error) => {
+      if(error) {
+        console.error(error);
+      }
+    });
+  }
+}
 
 // server listener
 const port = process.env.PORT || 8000;
-http.createServer((req, res) => {
+const SERVER = http.createServer((req, res) => {
   
   // send cors headers
-  if (req.method == 'OPTIONS') {
-    res.writeHead(200, {
-      'Access-Control-Expose-Headers': '*',
-      'Access-Control-Allow-Credentials': 'true',
-      'Access-Control-Max-Age': '3600',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Headers': '*',
-      'Access-Control-Allow-Methods': '*',
-      'Connection': 'timeout',
-      'Access-Control-Request-Methods': '*',
-      'Allow': 'GET, POST, PUT, DELETE, OPTIONS, HEAD',
-      'Allowed': 'GET, POST, PUT, DELETE, OPTIONS, HEAD',
-      'Content-Length': '0'
-    });
-    res.end();
-  } // manage post requests
-  else if (req.method == 'POST') {
+if (req.method == 'POST') {
     if (req.url == '/run') {
       res.writeHead(200, {
         'access-control-allow-origin': '*',
@@ -34,45 +31,56 @@ http.createServer((req, res) => {
       req.on('data', (byte) => {
         code += byte;
       }).on('end', () => {
-        fs.writeFile('./bin/temp.cpp', code, (err) => {
-          if(err){
-            console.error(err);
-            res.end(err);
-          }
-        });
-        cp.exec('g++ ./bin/temp.cpp -o $HOME/temp; $HOME/temp; rm -f ./bin/temp.cpp $HOME/temp', (error, stdout, stderr) =>
-        {
-          if(error){
-            console.log('Error:\n' + error);
-            res.end(error);
-          } else if (stderr){
-            console.log('Std-err:\n' + stderr);
-            res.end(stderr);
-          } else {
-            res.end(stdout);
-          }
-        });
-      }).on('error', (err) =>{
-        console.log(err);
-        res.end(err);
-      });
-    }
-  } else if (req.method == 'GET') {
-    if (req.url == '/') {
-      res.writeHead(200, {
-        'access-control-allow-origin': '*',
-        'content-type': 'text/html'
-      });
-      fs.readFile('./index.html', (err, out) => {
-        if (err) {
-          console.error(err);
-          res.end(err);
-        } else {
-          res.end(out);
+        try {
+          fs.writeFileSync('./sources/temp.cpp', code);
+        } catch (error) {
+          console.error('Internal error: ' + error);
+          res.send('Internal error, failed to save file\n');
+          res.end('Please try again later or contact developer majirouvik@gmail.com')
         }
+        
+        // compile the code here
+        try {
+        // cp.execSync('g++ ./sources/temp.cpp -o ./sources/temp') -- PRODUCTION VERSION
+          cp.execSync('g++ ./sources/temp.cpp -o $HOME/temp');
+        } catch (error) {
+          res.end(error.toString());
+          rm(['./sources/temp.cpp']); // remove the generated file
+          return;
+        }
+        
+        // handle program
+        // let.prog = cp.spawn('./sources/temp') -- PRODUCTION VERSION
+        let prog = cp.spawn(process.env.HOME + '/temp');
+        
+        prog.stdout.on('data', (byte) => {
+          res.write(byte);
+        });
+        
+        /*prog.stdout.on('end', () => {
+          // console.log(data);
+          // res.write(data);
+        });*/
+        
+        prog.on('close', (id) => {
+          res.end('\n[Terminated with code: ' + id + ']');
+        });
+        
+        prog.on('error', (error) => {
+          console.error('Failed to execute program: ' + error);
+        });
+        
+        // delete the source files and binaries here
+        // rm(['./sources/temp', './sources/temp.cpp']) -- PRODUCTION VERSION
+        rm([process.env.HOME + '/temp', './sources/temp.cpp']);
       });
     }
+    
   }
-}).listen(port);
+});
+
+SERVER.listen(port); // start listening here
+
+new Server(SERVER); // setup asset server
 
 console.log('Listening at port: ' + port);

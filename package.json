@@ -9,10 +9,19 @@
   },
   "keywords": [
     "serverside",
-    "gameplay",
-    "online-gaming"
+    "online compiler"
   ],
   "author": "Rouvik Maji",
   "license": "ISC",
-  "dependencies": {}
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rouvik/online-comliler.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rouvik/online-comliler/issues"
+  },
+  "homepage": "https://github.com/rouvik/online-comliler#readme",
+  "dependencies": {
+    "ws": "^8.5.0"
+  }
 }
