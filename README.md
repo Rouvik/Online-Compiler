@@ -6,9 +6,9 @@ This application is for testing purposes and is totally experimental
 Can lead to unexpected errors, so it is better if you know what you are doing
 
 ## Target:
-To be able to run codes of any sort with support for
-the graphical ones like 'glfw' and other peripheral support
-like mouse, keyboard, etc.
+To be able to compile `CPP` programs with maximum compatibility
+and make the process easy
+also support for infinite loops and specifically designed fallbacks
 
 ## Author:
 Rouvik Maji
