@@ -1,7 +1,7 @@
 {
   "name": "serveapp",
-  "version": "1.1.0",
-  "description": "This is a test application to host and run windows applications on server and control them from android for smooth gameplay",
+  "version": "1.0.0",
+  "description": "This is a test application to compile and run cpp programs in server and get live outputs",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,17 +12,16 @@
     "online compiler"
   ],
   "author": "Rouvik Maji",
-  "license": "MIT",
+  "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rouvik/online-comliler.git"
+    "url": "git+https://github.com/rouvik/online-compiler.git"
   },
   "bugs": {
-    "url": "https://github.com/rouvik/online-comliler/issues"
+    "url": "https://github.com/rouvik/online-compiler/issues"
   },
-  "homepage": "https://github.com/rouvik/online-comliler#readme",
+  "homepage": "https://github.com/rouvik/online-compiler#readme",
   "dependencies": {
     "ws": "^8.5.0"
-  },
-  "devDependencies": {}
+  }
 }
