@@ -1,5 +1,2 @@
-# ignore dummy file in logs
-logs/dummy.log
-
-# ignore dummy file in sources
-sources/dummy.cpp
+# dont upload node modules
+node_modules
