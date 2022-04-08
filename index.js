@@ -79,8 +79,8 @@ if (req.method == 'POST') {
   }
 });
 
-SERVER.listen(port); // start listening here
-
 new Server(SERVER); // setup asset server
+
+SERVER.listen(port); // start listening here
 
 console.log('Listening at port: ' + port);
