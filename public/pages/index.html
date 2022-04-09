@@ -4,18 +4,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>(g++) The GNU C/C++ compiler</title>
+    
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+        border: 0px;
+      }
+      
+      textarea {
+        width: calc(80vw - 8px);
+        border: 2px solid black;
+        border-radius: 5px;
+        padding: 2px;
+        font-family: 'Courier New', Courier, monospace;
+      }
+      
+      #in {
+        height: 50px;
+      }
+      
+      #out {
+        height: 10vh;
+      }
+      
+      #txt {
+        height: 60vh;
+      }
+      
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      button {
+        transform: translateX(-27vw);
+        margin: 5px;
+      }
+    </style>
 </head>
 <body>
-  <h1>The GNU C/C++ compiler (g++)</h1>
-  <textarea id="txt" cols="45" rows="20" placeholder="Your code here"></textarea><br>
-  <button onclick="sendCode()">Submit</button><br><br>
-  <textarea id="in" rows="23" cols="22" placeholder="Input"></textarea>
-  <textarea id="out" rows="23" cols="22" placeholder="Output" readonly></textarea>
+  <div class="container">
+    <h1>The GNU C/C++ compiler (g++)</h1>
+    <textarea id="txt" placeholder="Your code here"></textarea>
+    <button onclick="sendCode(this)">Compile & Run</button>
+    <textarea id="in" placeholder="Input"></textarea><br>
+    <textarea id="out" placeholder="Output" readonly></textarea>
+  </div>
 </body>
 <script type="text/javascript">
   var out = document.getElementById('out');
-  async function sendCode() {
-    out.value = 'Compiling...';
+  async function sendCode(elem) {
+    elem.innerHTML = 'Compiling...';
     let options = {
       method: 'POST',
       headers: {
@@ -26,6 +67,7 @@
     }, url = 'http://localhost:8000/run';
     let req = await fetch(url, options);
     out.value = await req.text();
+    elem.innerHTML = 'Compile & Run';
   }
 </script>
 </html>
