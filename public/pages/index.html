@@ -57,6 +57,7 @@
   var out = document.getElementById('out');
   async function sendCode(elem) {
     elem.innerHTML = 'Compiling...';
+    out.value = '';
     let options = {
       method: 'POST',
       headers: {
