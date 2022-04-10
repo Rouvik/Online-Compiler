@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>(g++) The GNU C/C++ compiler</title>
+    <title>The GNU C/C++ compiler (g++)</title>
     
     <style>
       body {
@@ -12,49 +12,14 @@
         border: 0px;
       }
       
-      textarea {
-        width: calc(80vw - 8px);
-        border: 2px solid black;
-        border-radius: 5px;
-        padding: 2px;
-        font-family: 'Courier New', Courier, monospace;
-      }
       
-      #in {
-        height: 50px;
-      }
-      
-      #out {
-        height: 10vh;
-      }
-      
-      #txt {
-        height: 60vh;
-      }
-      
-      .container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-      
-      button {
-        transform: translateX(-27vw);
-        margin: 5px;
-      }
     </style>
 </head>
 <body>
-  <div class="container">
-    <h1>The GNU C/C++ compiler (g++)</h1>
-    <textarea id="txt" placeholder="Your code here"></textarea>
-    <button onclick="sendCode(this)">Compile & Run</button>
-    <textarea id="in" placeholder="Input"></textarea><br>
-    <textarea id="out" placeholder="Output" readonly></textarea>
-  </div>
+  <!--Some code here ...-->
 </body>
 <script type="text/javascript">
-  var out = document.getElementById('out');
+  /*var out = document.getElementById('out');
   async function sendCode(elem) {
     elem.innerHTML = 'Compiling...';
     out.value = '';
@@ -69,6 +34,6 @@
     let req = await fetch(url, options);
     out.value = await req.text();
     elem.innerHTML = 'Compile & Run';
-  }
+  }*/
 </script>
 </html>
