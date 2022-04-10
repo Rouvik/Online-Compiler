@@ -102,7 +102,7 @@ class Server {
     } else {
       // example - https://example/public/test
       // actual path = ./public/test.html
-      fs.readFile('./public/pages' + req.url.substring(req.url.lastIndexOf('/')) + '.html', (error, out) => {
+      fs.readFile('./public/pages' + req.url.substring(req.url.indexOf('/public') + 7) + '.html', (error, out) => {
         if (error) {
           console.error(error);
           res.end(res404);
@@ -116,9 +116,9 @@ class Server {
   // manage requests to assets
   serveAssets(req, res) {
     // get positions for extraction
-    let lastSlash = req.url.lastIndexOf('/');
-    
-    fs.readFile('./public/assets' + req.url.substring(lastSlash), (error, out) => {
+    let path = './public/assets' + req.url.substring(req.url.indexOf('/assets') + 7);
+    console.log(path);
+    fs.readFile(path, (error, out) => {
       if(error) {
         console.error(error);
         res.writeHead(404, {
@@ -139,11 +139,12 @@ class Server {
   // get asset type
   getAssetType(req) {
     let dotPos = req.url.lastIndexOf('.') + 1,
-        fileType = Server.assetTypes[req.url.substring(dotPos)];
+        extension = req.url.substring(dotPos),
+        fileType = Server.assetTypes[extension];
     if (fileType == undefined) {
+      console.error('File type error: No such file type exists with extension = ' + extension);
       fileType = 'application/octet-stream';
     }
-    console.log(fileType);
     return fileType;
   }
 }
