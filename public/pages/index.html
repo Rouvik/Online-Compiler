@@ -25,16 +25,22 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        background: red;
-        width: calc(100vw - 40px);
+        background: linear-gradient(-45deg, black, #222E3F);
+        width: calc(100vw - 60px);
         height: 100vh;
         position: absolute;
         right: 0px;
       }
       
+      .container .heading {
+        margin: 10px;
+        color: #FF1373;
+        text-shadow: 2px 2px 7px #FF579C;
+      }
+      
       .container #editor {
         height: 50vh;
-        width: 85vw;
+        width: 80vw;
         margin: 5px;
       }
       
@@ -42,20 +48,22 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        background: blue;
+        background: none;
+        width: 80vw;
       }
       
       .io-container #output {
         width: 50vw;
         height: 20vh;
         margin: 5px;
+        font-size: 15px;
       }
       
       .run-input-container {
         display: flex;
         flex-direction: column;
         align-items: center;
-        background: green;
+        background: none;
       }
       
       .run-input-container button {
@@ -72,25 +80,39 @@
         width: 30vw;
         height: 15vh;
         margin: 5px;
+        font-size: 15px;
       }
       
       .drawer {
-        background: yellow;
-        width: 40px;
+        background-color: #151F30;
+        width: 60px;
         height: 100vh;
         position: absolute;
         left: 0px;
         top: 0px;
-        
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: 7px -1px 7px #151F30;
+        z-index: 999;
+      }
+      
+      .drawer button {
+        width: 60px;
+        height: 60px;
+        background: none;
+        border: none;
+        border-bottom: 1px solid #5AD28C;
+        margin-top: 2px;
       }
     </style>
 </head>
 <body>
   <div class="drawer">
-    
+    <button onclick="prompt('Put in the github link:')"><img src="/assets/index/github.svg" alt="Github"></button>
   </div>
   <div class="container">
-    <p><h1>The GNU C/C++ compiler (g++)</h1></p>
+    <p><h1 class="heading">The GNU C/C++ compiler (g++)</h1></p>
     <textarea id="editor" placeholder="Place your code here..."></textarea>
     <div class="io-container">
       <div class="run-input-container">
