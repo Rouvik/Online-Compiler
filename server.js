@@ -117,7 +117,6 @@ class Server {
   serveAssets(req, res) {
     // get positions for extraction
     let path = './public/assets' + req.url.substring(req.url.indexOf('/assets') + 7);
-    console.log(path);
     fs.readFile(path, (error, out) => {
       if(error) {
         console.error(error);
